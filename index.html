@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        input[type="text"] {
+            width: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        main {
+            display: flex;
+        }
+
+        .chat-list {
+            flex: 1;
+            border-right: 1px solid #ccc;
+            padding-right: 20px;
+            overflow-y: auto; /* Add scrollbar if needed */
+        }
+
+        .chat {
+            display: flex;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            background-color: #ccc; /* Placeholder color */
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .chat-details {
+            flex: 1;
+        }
+
+        .chat-details h2 {
+            margin: 5px 0;
+        }
+
+        .chat-window {
+            flex: 3;
+            padding: 20px;
+        }
+
+        .conversation {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .outgoing {
+            background-color: #DCF8C6;
+            align-self: flex-end;
+        }
+
+        .incoming {
+            background-color: #E5E5EA;
+        }
+
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        textarea:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Family Chat</h1>
+        <input type="text" placeholder="Search">
+    </header>
+    <main>
+        <div class="chat-list">
+            <!-- Family members -->
+            <div class="chat">
+                <div class="profile-pic"></div>
+                <div class="chat-details">
+                    <h2>Dad</h2>
+                    <p>Last message...</p>
+                </div>
+            </div>
+            <div class="chat">
+                <div class="profile-pic"></div>
+                <div class="chat-details">
+                    <h2>Mom</h2>
+                    <p>Last message...</p>
+                </div>
+            </div>
+            <div class="chat">
+                <div class="profile-pic"></div>
+                <div class="chat-details">
+                    <h2>Brother</h2>
+                    <p>Last message...</p>
+                </div>
+            </div>
+            <div class="chat">
+                <div class="profile-pic"></div>
+                <div class="chat-details">
+                    <h2>Sister</h2>
+                    <p>Last message...</p>
+                </div>
+            </div>
+            <!-- Add more family members as needed -->
+        </div>
+        <div class="chat-window">
+            <!-- Chat window content -->
+            <div class="conversation">
+                <!-- Messages will appear here -->
+            </div>
+            <textarea placeholder="Type your message"></textarea>
+        </div>
+    </main>
+</div>
+
+<script>
+    // Function to handle opening a chat
+    function openChat() {
+        // Simulate displaying messages for the selected family member
+        // You can customize this function to load actual messages from a database
+        const selectedChat = this.querySelector('.chat-details h2').textContent;
+        const conversation = document.querySelector('.conversation');
+        conversation.innerHTML = `<div class="message outgoing"><p>Hello ${selectedChat}!</p></div>`;
+    }
+
+    // Add event listeners to all family chat elements
+    const chats = document.querySelectorAll('.chat');
+    chats.forEach(chat => {
+        chat.addEventListener('click', openChat);
+    });
+
+    // Function to send a message
+    function sendMessage() {
+        const textarea = document.querySelector('textarea');
+        const messageContent = textarea.value.trim();
+
+        if (messageContent !== '') {
+            const conversation = document.querySelector('.conversation');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', 'outgoing');
+            messageDiv.innerHTML = `<p>${messageContent}</p>`;
+            conversation.appendChild(messageDiv);
+
+            // Clear textarea after sending message
+            textarea.value = '';
+        }
+    }
+
+    // Add event listener for sending messages
+    const textarea = document.querySelector('textarea');
+    textarea.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            sendMessage();
+        }
+    });
+</script>
+
+</body>
+</html>
